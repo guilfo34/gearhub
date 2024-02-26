@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PostsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -17,12 +19,6 @@ class Posts
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $date = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $user = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $car = null;
-
     #[ORM\Column(length: 1000, nullable: true)]
     private ?string $text = null;
 
@@ -31,6 +27,14 @@ class Posts
 
     #[ORM\Column]
     private ?int $vote = null;
+
+    #[ORM\ManyToOne(inversedBy: 'posts')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
+    #[ORM\ManyToOne(inversedBy: 'posts')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Cars $car = null;
 
     public function getId(): ?int
     {
@@ -49,29 +53,7 @@ class Posts
         return $this;
     }
 
-    public function getUser(): ?string
-    {
-        return $this->user;
-    }
 
-    public function setUser(string $user): static
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    public function getCar(): ?string
-    {
-        return $this->car;
-    }
-
-    public function setCar(?string $car): static
-    {
-        $this->car = $car;
-
-        return $this;
-    }
 
     public function getText(): ?string
     {
@@ -105,6 +87,30 @@ class Posts
     public function setVote(int $vote): static
     {
         $this->vote = $vote;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getCar(): ?Cars
+    {
+        return $this->car;
+    }
+
+    public function setCar(?Cars $car): static
+    {
+        $this->car = $car;
 
         return $this;
     }

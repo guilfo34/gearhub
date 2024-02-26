@@ -1,3 +1,39 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.navbar {
+    background-color: #333;
+    width: 200px;
+    /* Adjust as per your design */
+    height: 100vh;
+    /* Make it full height of the viewport */
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.navbar-nav {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-item {
+    border-bottom: 1px solid #555;
+}
+
+.nav-link {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: #fff;
+}
+
+.nav-link:hover {
+    background-color: #555;
+}
+
+.body-container{
+    margin-left: 225px;
+}

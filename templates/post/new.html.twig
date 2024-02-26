@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Post{% endblock %}
+
+{% block body %}
+<h1 class="text-3xl font-bold underline">
+	Add a New Post
+</h1>
+
+{{form_start(createPostForm)}}
+{{form_row(createPostForm.text)}}
+{{form_row(createPostForm.image)}}
+{{form_row(createPostForm.car)}}
+{{ form_row(createPostForm.save, { 'label': 'Save' }) }}
+{{form_end(createPostForm)}}
+{% endblock %}

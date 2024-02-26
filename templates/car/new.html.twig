@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CreateCarController!
+{% endblock %}
+
+{% block body %}
+
+<h1 class="text-3xl font-bold underline">
+	Create a New Car
+</h1>
+
+
+	{{form_start(createcarform)}}
+	{{form_row(createcarform.brand)}}
+	{{form_row(createcarform.model)}}
+	{{form_row(createcarform.power)}}
+	{{form_row(createcarform.color)}}
+	{{form_row(createcarform.year)}}
+	{{form_row(createcarform.cm3)}}
+	{{form_row(createcarform.weight)}}
+	{{form_row(createcarform.pocess)}}
+	{{ form_row(createcarform.save, { 'label': 'Save' }) }}
+	{{form_end(createcarform)}}
+
+
+
+
+
+
+
+
+{% endblock %}
+

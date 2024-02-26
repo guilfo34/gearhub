@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CarsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -26,8 +28,8 @@ class Cars
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $color = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $year = null;
+    #[ORM\Column(nullable: true)]
+    private ?int $year = null;
 
     #[ORM\Column(nullable: true)]
     private ?int $cm3 = null;
@@ -37,6 +39,18 @@ class Cars
 
     #[ORM\Column]
     private ?bool $pocess = null;
+
+    #[ORM\ManyToOne(inversedBy: 'car')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
+    #[ORM\OneToMany(mappedBy: 'car', targetEntity: Posts::class)]
+    private Collection $posts;
+
+    public function __construct()
+    {
+        $this->posts = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -91,12 +105,12 @@ class Cars
         return $this;
     }
 
-    public function getYear(): ?\DateTimeInterface
+    public function getYear(): ?int
     {
         return $this->year;
     }
 
-    public function setYear(?\DateTimeInterface $year): static
+    public function setYear(?int $year): static
     {
         $this->year = $year;
 
@@ -135,6 +149,48 @@ class Cars
     public function setPocess(bool $pocess): static
     {
         $this->pocess = $pocess;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Posts>
+     */
+    public function getPosts(): Collection
+    {
+        return $this->posts;
+    }
+
+    public function addPost(Posts $post): static
+    {
+        if (!$this->posts->contains($post)) {
+            $this->posts->add($post);
+            $post->setCar($this);
+        }
+
+        return $this;
+    }
+
+    public function removePost(Posts $post): static
+    {
+        if ($this->posts->removeElement($post)) {
+            // set the owning side to null (unless already changed)
+            if ($post->getCar() === $this) {
+                $post->setCar(null);
+            }
+        }
 
         return $this;
     }

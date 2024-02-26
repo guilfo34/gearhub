@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Your Profile
+{% endblock %}
+
+{% block body %}
+
+
+	<h1 class="text-3xl font-bold underline">
+		Your profile
+	</h1>
+
+	<p>User Email :
+		{{app.user.email}}
+	</p>
+{% endblock %}
+
