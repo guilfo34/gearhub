@@ -37,3 +37,16 @@
 .body-container{
     margin-left: 225px;
 }
+
+
+.details {
+    display: grid;
+    grid-template-columns: 49% 49%;
+    justify-content: space-between;
+}
+
+.details .infos table, tr, th, td {
+    border-collapse: collapse;
+    border: 1px solid black;
+    padding: 20px;
+}

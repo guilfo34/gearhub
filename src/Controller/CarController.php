@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Cars;
 use App\Form\CarType;
+use App\Repository\CarsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,9 +14,18 @@ use Symfony\Component\HttpFoundation\Request;
 class CarController extends AbstractController
 {
     #[Route('/mycars', name: 'app_list_car')]
-    public function index(): Response
+    public function index(CarsRepository $carsRepository): Response
     {
-        return $this->render('car/index.html.twig');
+
+        $user=$this->getUser();
+        $listcars = $carsRepository->findBy(
+            ['user' => $user,
+            'pocess'=> true]
+        );
+
+        return $this->render('car/index.html.twig', [
+            'listcars' => $listcars     
+        ]);
     }
 
     #[Route('/createacar', name: 'app_create_car')]

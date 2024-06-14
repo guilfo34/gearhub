@@ -1,19 +1,74 @@
-
-
-{% block title %}Tableau de Bord{% endblock %}
+{% block title %}Home - GEARHUB{% endblock %}
 {% extends 'base.html.twig' %}
 
+
 {% block body %}
+<!-- component -->
+<section class=" bg-slate-100">
+
+	<div class="container px-6 py-10 mx-auto">
+		<h1 class="text-3xl font-semibold text-gray-800 capitalize lg:text-4xl dark:text-black">Posts</h1>
+
+		<div class="grid grid-cols-1 gap-8 mt-8 md:mt-16 md:grid-cols-2">
+<!-- post -->
+{% for post in listposts %}
+<div id="gallery" class="lg:flex  bg-slate-400">
+
+
+<a class="liens" data-pswp-width="2500" data-pswp-height="1666" href="{{asset('uploads/' ~ post.image)}}">
+
+
+					<img class="object-cover w-full h-56 rounded-lg lg:w-64" src="{{asset('uploads/' ~ post.image)}}" alt="">
+				</a>
 
 
 
-<div class="menu">
-titre
-</div>
+				<div class="flex flex-col justify-between py-6 lg:mx-6">
+                    <p class="text-xl font-semibold text-gray-800 hover:underline dark:text-gray-800 "></p>
 
-<div class="content">
-<p>nombre de clients : {{listUser}}</p>
-</div>
+						<a href="{{path('app_show_post', {
+							post: post.id
+						})}}">{{ post.text|u.truncate(48, '...') }}</a>
 
 
+					</p>
+					<span class="text-sm text-gray-950 dark:text-gray-950">On:
+					{{post.date|date('d-m-Y') }}</span>
+
+					<span class="text-sm text-gray-950 dark:text-gray-950">
+						{{ post.car.brand }} {{ post.car.model }}</span>
+
+					<span class="text-sm text-gray-950 dark:text-gray-950">
+						{{ post.user.username }}</span>
+
+					<a class="text-sm text-gray-950 dark:text-gray-950" href="{{path('app_signal',{
+						post : post.id })}}">
+						Signal</a>
+
+				</div>
+			</div>
+{% endfor %}
+		</div>
+	</div>
+</section>
+
+{% endblock %}
+
+{% block javascripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/umd/photoswipe-lightbox.umd.min.js"></script>
+<script type="module">
+	// Include Lightbox
+
+const lightbox = new PhotoSwipeLightbox({ // may select multiple "galleries"
+gallery: '#gallery',
+
+// Elements within gallery (slides)
+children: 'a.liens',
+
+// setup PhotoSwipe Core dynamic import
+pswpModule: () => import ('https://cdnjs.cloudflare.com/ajax/libs/photoswipe/5.4.2/photoswipe.esm.min.js')
+});
+lightbox.init();
+
+</script>
 {% endblock %}

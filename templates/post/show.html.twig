@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Post : {{ post.text|u.truncate(48, '...') }}{% endblock %}
+
+{% block body %}
+	<h1 class="text-3xl font-bold underline">
+        Post
+	</h1><br>
+
+    <div class="details">
+        <div class="img">
+            <img src="{{ asset('uploads/' ~ post.image) }}">
+
+            <p>Author : {{ post.user.username }}</p>
+        </div>
+
+        <div class="infos">
+            {{ post.text }}<br>
+
+            <table>
+                <tr>
+                    <th>Brand</th>
+                    <th>Model</th>
+                    <th>Horsepower</th>
+                    <th>Color</th>
+                    <th>Year</th>
+                    <th>CM<sup>3</sub></th>
+                    <th>Weight</th>
+                </tr>
+                <tr>
+                    <td>{{post.car.brand}}</td>
+                    <td>{{post.car.model}}</td>
+                    <td>{{post.car.power ~ ' ' ~ 'Ch'}}</td>
+                    <td>{{post.car.color}}</td>
+                    <td>{{post.car.year}}</td>
+                    <td>{{post.car.cm3}}</td>
+                    <td>{{post.car.weight}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+	
+{% endblock %}
+

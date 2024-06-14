@@ -14,13 +14,16 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class PostController extends AbstractController
 {
-    #[Route('/post', name: 'app_post')]
-    public function index(): Response
+    #[Route('/post/{post}', name: 'app_show_post')]
+    public function index(Posts $post): Response
     {
-        return $this->render('post/new.html.twig', [
-            'controller_name' => 'PostController',
+
+        return $this->render('post/show.html.twig', [
+            'post' => $post
         ]);
     }
+
+
     #[Route('/newpost', name: 'app_newpost')]
     public function new(SluggerInterface $slugger,  Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -31,9 +34,12 @@ class PostController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $post->setUser($user);
-            if($form->get('img') !== null) {
+            $post->setPublished(1);
+            $post->setModerated(0);
+            $post->setSignaled(0);
+            if($form->get('image') !== null) {
 
-                $file = $form->get('img')->getData();
+                $file = $form->get('image')->getData();
 
                 if($file)
                 {

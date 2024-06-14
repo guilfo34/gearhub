@@ -10,5 +10,30 @@
 
 <a href="/createacar"> Create a New Car </a>
 
-
+<ul class="divide-y divide-gray-200 dark:divide-gray-700">
+	{% for car in listcars %}
+        <li class="py-12">
+            <article>
+                <div class="space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0">
+                    <div class="space-y-5 xl:col-span-3">
+                        <div class="space-y-6">
+                            <div>
+                                <h2 class="text-2xl font-bold leading-8 tracking-tight">
+                                    <p class="text-gray-900">{{ car.brand}} {{ car.model }}</a>
+                                </h2>
+                                <div class="flex flex-wrap">
+                                    <p class="mr-3 text-sm font-medium uppercase text-primary-500">{{ car.power}} ch</p>
+                                    <p class="mr-3 text-sm font-medium uppercase text-primary-500">{{ car.weight }} kg</p>
+                                    <p class="mr-3 text-sm font-medium uppercase text-primary-500">{{ car.cm3 }} cm3</p>
+                                    <p class="mr-3 text-sm font-medium uppercase text-primary-500">date : {{ car.year }}</p>
+                                    <p class="mr-3 text-sm font-medium uppercase text-primary-500">color :{{ car.color }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </li>
+	{% endfor %}
+	</ul>
 {% endblock %}

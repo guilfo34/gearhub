@@ -3,7 +3,11 @@
 	<head>
 		<meta charset="UTF-8">
         <title>{% block title %}base{% endblock %}</title>
+		<link rel="icon" type="image/x-icon" href="{{ asset("images/icon.ico") }}">
+
 {% block stylesheets %}
+	<link rel="stylesheet" href="{{asset('styles/app.css')}}">
+	<link rel="stylesheet" href="{{ asset('styles/photoswipe.min.css') }}">
 	{{ encore_entry_link_tags('app') }}
 {% endblock %}
 	</head>
@@ -13,6 +17,7 @@
 				<li class="nav-item">
 					<a href="/" class="nav-link">Home</a>
 				</li>
+				{% if app.user %}
 				<li class="nav-item">
 					<a href="/newpost" class="nav-link">New Post</a>
 				</li>
@@ -22,9 +27,14 @@
 				<li class="nav-item">
 					<a href="/mycars" class="nav-link">My cars</a>
 				</li>
-				<li class="nav-item">
-                    <a href="/login" class="nav-link">Login/Logout</a>
+				<li class="nav-item bg-red-600">
+                    <a href="/logout" class="nav-link">Logout</a>
 				</li>
+				{% else %}
+				<li class="nav-item bg-purple-600">
+					<a href="/login" class="nav-link">Login</a>
+				</li>
+				{% endif %}
 			</ul>
 		</nav>
 <div class="body-container">
@@ -37,6 +47,10 @@
 {% endblock %}
 
 </div>
+	
+	{% block javascripts %}
+
+	{% endblock %}
 
     </body>
 </html>

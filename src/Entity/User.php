@@ -10,6 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Attribute\Groups;
+
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
@@ -21,6 +23,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Groups(['posts.index'])]
     private ?string $email = null;
 
     #[ORM\Column]
@@ -47,10 +50,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $imgprofile = null;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $creationdate = null;
+
     public function __construct()
     {
         $this->car = new ArrayCollection();
         $this->posts = new ArrayCollection();
+        $this->creationdate = new \DateTime();
     }
 
     public function getId(): ?int
@@ -215,6 +222,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setImgprofile(?string $imgprofile): static
     {
         $this->imgprofile = $imgprofile;
+
+        return $this;
+    }
+
+    public function getCreationdate(): ?\DateTimeInterface
+    {
+        return $this->creationdate;
+    }
+
+    public function setCreationdate(\DateTimeInterface $creationdate): static
+    {
+        $this->creationdate = $creationdate;
 
         return $this;
     }
